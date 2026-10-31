@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Highwater Advisory — Technology &amp; Product Strategy Advisory</title>
+<meta name="description" content="Independent technology and product strategy advisor, AI-adoption specialist and fractional CTO for founders and investors — based in the UK, working across the UK and US.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400..600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12222E;
+    --ink-soft:#3E5566;
+    --chart:#F2ECD9;
+    --chart-line:#CBC0A0;
+    --sea:#2F6B72;
+    --brass:#A9752E;
+    --foam:#FBF9F2;
+    --card-border: rgba(18,34,46,0.14);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#EDEFEE;
+      --ink-soft:#A9BAC4;
+      --chart:#0D1B24;
+      --chart-line:#1E3542;
+      --sea:#7FC2C9;
+      --brass:#D6A25C;
+      --foam:#0F212C;
+      --card-border: rgba(237,239,238,0.14);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#EDEFEE;
+    --ink-soft:#A9BAC4;
+    --chart:#0D1B24;
+    --chart-line:#1E3542;
+    --sea:#7FC2C9;
+    --brass:#D6A25C;
+    --foam:#0F212C;
+    --card-border: rgba(237,239,238,0.14);
+    color-scheme: dark;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--chart);
+    color:var(--ink);
+    font-family:"IBM Plex Sans", -apple-system, sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;}
+  a{color:inherit;}
+  .wrap{max-width:1080px; margin:0 auto; padding-inline:24px;}
+  h1,h2,h3{
+    font-family:"Fraunces", Georgia, serif;
+    font-weight:500;
+    text-wrap:balance;
+    margin:0;
+    color:var(--ink);
+  }
+  .eyebrow{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:0.78rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--sea);
+  }
+  .lede{
+    font-size:1.15rem;
+    color:var(--ink-soft);
+    max-width:52ch;
+  }
+
+  /* ---- header ---- */
+  header{
+    position:sticky; top:0; z-index:20;
+    background:color-mix(in srgb, var(--chart) 88%, transparent);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--card-border);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-block:14px;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .brand{display:flex; align-items:center; gap:10px; text-decoration:none;}
+  .brand svg{width:34px; height:34px; flex-shrink:0;}
+  .brand-word{
+    font-family:"Fraunces", serif; font-size:1.15rem; font-weight:500; letter-spacing:0.01em;
+  }
+  nav.links{display:flex; gap:20px; flex-wrap:wrap;}
+  nav.links a{
+    font-size:0.9rem; text-decoration:none; color:var(--ink-soft);
+    border-bottom:1px solid transparent;
+  }
+  nav.links a:hover{ color:var(--sea); border-bottom-color:var(--sea); }
+
+  /* ---- hero ---- */
+  .hero{
+    padding-block: 72px 56px;
+  }
+  .hero .wrap{
+    display:grid; grid-template-columns: 1.3fr 0.9fr; gap:48px; align-items:center;
+  }
+  .hero h1{ font-size:clamp(2.3rem, 4.6vw, 3.4rem); margin-block:14px 18px; }
+  .hero .eyebrow{margin-bottom:2px;}
+  .cta-row{ display:flex; gap:14px; margin-top:28px; flex-wrap:wrap; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:12px 22px; border-radius:2px;
+    font-family:"IBM Plex Mono", monospace; font-size:0.85rem; letter-spacing:0.03em;
+    text-decoration:none; border:1px solid var(--ink);
+    transition:transform .15s ease;
+  }
+  .btn:hover{ transform:translateY(-1px); }
+  .btn.primary{ background:var(--ink); color:var(--foam); }
+  .btn.ghost{ background:transparent; color:var(--ink); }
+
+  .compass-wrap{ display:flex; justify-content:center; }
+  .compass-wrap svg{ width:min(280px, 80%); height:auto; }
+
+  /* ---- section shells ---- */
+  section{ padding-block:64px; }
+  section + section{ border-top:1px solid var(--card-border); }
+  .section-head{ margin-bottom:36px; max-width:60ch; }
+  .section-head h2{ font-size:clamp(1.6rem,3vw,2.1rem); margin-bottom:10px; }
+
+  /* ---- services ---- */
+  .service-grid{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:1px;
+    background:var(--card-border);
+    border:1px solid var(--card-border);
+  }
+  .service{
+    background:var(--foam); padding:26px 24px;
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .service .num{
+    font-family:"IBM Plex Mono", monospace; font-size:0.8rem; color:var(--brass);
+  }
+  .service h3{ font-family:"Fraunces", serif; font-size:1.15rem; font-weight:600; }
+  .service p{ color:var(--ink-soft); font-size:0.95rem; margin:0; }
+  .service a{ color:var(--sea); text-decoration:underline; }
+
+  /* ---- sectors / partners (shared card grid) ---- */
+  .sector-grid, .partner-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; }
+  .sector-card, .partner-card{
+    border:1px solid var(--card-border); background:var(--foam);
+    padding:30px 28px; position:relative;
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .sector-card .tag, .partner-card .tag{
+    font-family:"IBM Plex Mono", monospace; font-size:0.72rem; letter-spacing:0.1em;
+    color:var(--sea); text-transform:uppercase; display:block; margin-bottom:4px;
+  }
+  .sector-card h3, .partner-card h3{ font-size:1.3rem; }
+  .sector-card p, .partner-card p{ color:var(--ink-soft); margin:0; }
+  .partner-card .links{ display:flex; flex-wrap:wrap; gap:16px; margin-top:4px; }
+  .partner-card .links a{
+    font-family:"IBM Plex Mono", monospace; font-size:0.8rem;
+    color:var(--sea); text-decoration:none; border-bottom:1px solid var(--sea);
+  }
+  .partner-card .stat-note{
+    font-family:"IBM Plex Mono", monospace; font-size:0.78rem;
+    color:var(--ink-soft); border-left:2px solid var(--brass); padding-left:10px;
+  }
+
+  /* ---- principle rows (approach / ai-adoption) ---- */
+  .principle-row{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:28px; }
+  .principle .mark{ font-family:"Fraunces", serif; font-style:italic; font-size:1.8rem; color:var(--sea); }
+  .principle h3{ font-size:1.05rem; margin-block:6px 8px; }
+  .principle p{ color:var(--ink-soft); font-size:0.95rem; margin:0; }
+
+  /* ---- writing ---- */
+  .topic-chips{ display:flex; gap:10px; flex-wrap:wrap; margin-top:20px; }
+  .chip{
+    font-family:"IBM Plex Mono", monospace; font-size:0.78rem; letter-spacing:0.03em;
+    padding:7px 14px; border:1px solid var(--card-border); border-radius:999px;
+    color:var(--ink-soft);
+  }
+  .writing-cta{ margin-top:26px; }
+
+  /* ---- about ---- */
+  .about-grid{ display:grid; grid-template-columns: 1.4fr 1fr; gap:40px; align-items:start; }
+  .stat-list{ display:flex; flex-direction:column; gap:18px; }
+  .stat{ border-left:2px solid var(--brass); padding-left:14px; }
+  .stat b{ display:block; font-family:"Fraunces", serif; font-size:1.5rem; }
+  .stat span{ color:var(--ink-soft); font-size:0.88rem; }
+
+  /* ---- contact ---- */
+  .contact-box{
+    display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px;
+  }
+  .contact-box a.email{
+    font-family:"Fraunces", serif; font-size:1.6rem; text-decoration:none; color:var(--ink);
+    border-bottom:1px solid var(--brass);
+  }
+
+  footer{
+    padding-block:32px; border-top:1px solid var(--card-border);
+    font-family:"IBM Plex Mono", monospace; font-size:0.78rem; color:var(--ink-soft);
+  }
+  footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+
+  @media (max-width: 760px){
+    .hero .wrap{ grid-template-columns:1fr; }
+    .compass-wrap{ order:-1; }
+    .about-grid{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <circle cx="60" cy="60" r="54" fill="none" stroke="currentColor" stroke-width="2" opacity="0.55" style="color:var(--ink)"/>
+        <polygon points="60,14 78.4,41.6 106,60 78.4,78.4 60,106 41.6,78.4 14,60 41.6,41.6" fill="var(--ink)"/>
+        <circle cx="60" cy="60" r="7" fill="var(--foam)"/>
+        <circle cx="60" cy="60" r="7" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+      </svg>
+      <span class="brand-word">Highwater Advisory</span>
+    </a>
+    <nav class="links">
+      <a href="#services">Services</a>
+      <a href="#ai-adoption">AI Adoption</a>
+      <a href="#writing">Writing</a>
+      <a href="#partners">Partners</a>
+      <a href="#sectors">Who I Work With</a>
+      <a href="#approach">Approach</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Technology strategy · organisation design · AI adoption</span>
+      <h1>Direction for product, technology,<br>and the organisations that build them.</h1>
+      <p class="lede">I help founders and investors set technical and product direction, build the organisations that can deliver it, and adopt AI without losing control of what ships — as an advisor, mentor, and, when it's the right fit, a fractional CTO.</p>
+      <div class="cta-row">
+        <a class="btn primary" href="mailto:gordon.j.weir@gmail.com?subject=Highwater%20Advisory%20—%20let's%20talk">Start a conversation →</a>
+        <a class="btn ghost" href="#services">See how I help</a>
+      </div>
+    </div>
+    <div class="compass-wrap">
+      <svg viewBox="0 0 200 200" aria-hidden="true">
+        <circle cx="100" cy="100" r="92" fill="none" stroke="var(--ink)" stroke-width="1" opacity="0.35"/>
+        <circle cx="100" cy="100" r="70" fill="none" stroke="var(--ink)" stroke-width="1" opacity="0.25"/>
+        <polygon points="100,24 130.7,69.3 176,100 130.7,130.7 100,176 69.3,130.7 24,100 69.3,69.3"
+                 fill="none" stroke="var(--ink)" stroke-width="1.5" opacity="0.5"/>
+        <polygon points="100,40 115,85 100,100 85,85" fill="var(--brass)"/>
+        <polygon points="100,160 115,115 100,100 85,115" fill="var(--ink)" opacity="0.75"/>
+        <polygon points="40,100 85,85 100,100 85,115" fill="var(--ink)" opacity="0.55"/>
+        <polygon points="160,100 115,85 100,100 115,115" fill="var(--ink)" opacity="0.55"/>
+        <circle cx="100" cy="100" r="5" fill="var(--ink)"/>
+        <text x="100" y="16" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--ink)">N</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Where to start</span>
+      <h2>Where I help</h2>
+      <p class="lede">Clearer direction, teams that actually ship, and AI adoption that compounds instead of stalling — brought in the way that fits: advisory, hands-on, or fractional.</p>
+    </div>
+    <div class="service-grid">
+      <div class="service">
+        <span class="num">01</span>
+        <h3>Advisory &amp; direction-setting</h3>
+        <p>Helping founders and leadership teams define their technical and product direction — their north star — and the plan to actually get there: strategy, architecture and organisation design, grounded in direct operating experience rather than theory.</p>
+      </div>
+      <div class="service">
+        <span class="num">02</span>
+        <h3>AI adoption</h3>
+        <p>Practical engineering adoption, governance and risk, and the strategic case for where to invest — woven together, not treated as separate problems. <a href="#ai-adoption">More below</a>.</p>
+      </div>
+      <div class="service">
+        <span class="num">03</span>
+        <h3>Startup mentorship &amp; business partnership</h3>
+        <p>A senior technology voice and sounding board for founders — before you need, or can justify, a full-time hire.</p>
+      </div>
+      <div class="service">
+        <span class="num">04</span>
+        <h3>Organisation design &amp; scaling</h3>
+        <p>Building and rebuilding engineering teams of tens to hundreds of people, on-shore, near-shore and offshore, without losing speed or morale.</p>
+      </div>
+      <div class="service">
+        <span class="num">05</span>
+        <h3>Engineering health &amp; metrics</h3>
+        <p>DORA and beyond — the instrumentation to track real delivery progress, not vanity numbers, and to show a board what's actually improving.</p>
+      </div>
+      <div class="service">
+        <span class="num">06</span>
+        <h3>Fractional CTO &amp; technical due diligence</h3>
+        <p>Hands-on executive leadership and pre- and post-investment technical assessment, available directly or through established fractional-leadership networks — informed by direct involvement in technical due diligence for M&amp;A activity, and two decades of pattern-recognition for what a healthy engineering organisation looks like, and what doesn't.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="ai-adoption">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Where the tide is heading</span>
+      <h2>AI adoption, deliberately</h2>
+      <p class="lede">AI-assisted and agentic software delivery is moving from experiment to expectation. Adopting it well means three things moving together — the engineering floor, the guardrails, and the boardroom case for where to invest.</p>
+    </div>
+    <div class="principle-row">
+      <div class="principle">
+        <span class="mark">“</span>
+        <h3>Practical adoption</h3>
+        <p>Bringing AI-assisted and agentic delivery into how engineering teams actually build — tooling choices, workflow redesign, and the metrics to show whether it's genuinely helping, not just changing what the work looks like.</p>
+      </div>
+      <div class="principle">
+        <span class="mark">“</span>
+        <h3>Governance &amp; risk</h3>
+        <p>Agentic systems need accountability, not just speed. Building the review points, guardrails and audit trail that let an organisation move fast on AI without losing control of what it's shipping.</p>
+      </div>
+      <div class="principle">
+        <span class="mark">“</span>
+        <h3>Strategic investment</h3>
+        <p>Helping leadership and boards decide where AI adoption actually pays off — separating genuine productivity gains from hype, and sequencing investment so it compounds rather than fragments.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="writing">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Thinking</span>
+      <h2>Writing on AI adoption, strategy and organisation design</h2>
+      <p class="lede">Original pieces on what's actually working in AI-assisted delivery, technology strategy and organisation design — grounded in direct experience, not theory. First pieces coming soon.</p>
+    </div>
+    <div class="topic-chips">
+      <span class="chip">Practical AI adoption</span>
+      <span class="chip">Governance &amp; risk</span>
+      <span class="chip">Strategic investment</span>
+      <span class="chip">Organisation design</span>
+      <span class="chip">Technical due diligence</span>
+    </div>
+    <div class="writing-cta">
+      <a class="btn ghost" href="mailto:gordon.j.weir@gmail.com?subject=Notify%20me%20—%20Highwater%20Advisory%20writing">Get notified when the first piece is up →</a>
+    </div>
+  </div>
+</section>
+
+<section id="partners">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Working alongside</span>
+      <h2>Partners</h2>
+      <p class="lede">A small network of independent specialists I work alongside — and refer clients to and from — when something a client needs sits outside my own lane.</p>
+    </div>
+    <div class="partner-grid">
+      <div class="partner-card">
+        <span class="tag">Fractional leadership network</span>
+        <h3>Rational Partners</h3>
+        <p>The network I work through for fractional CTO engagements — Rational places experienced technology leaders into committed, part-time roles with growing companies. My own fractional CTO work runs through them.</p>
+        <div class="links"><a href="https://rational.partners" target="_blank" rel="noopener">Visit rational.partners →</a></div>
+      </div>
+      <div class="partner-card">
+        <span class="tag">AI Business Analyst — partner on sourcing, sales &amp; delivery</span>
+        <h3>Varos</h3>
+        <p>Varos's AI business analyst, Arthur, runs discovery — process mapping, requirements gathering, fit-gap analysis — through structured AI-led interviews instead of weeks of workshops. I partner on Varos engagements end-to-end: identifying the opportunity, running the sale, and leading implementation.</p>
+        <p class="stat-note">Varos's own directional figures: 120 employees interviewed in 72 hours, replacing roughly $1M and six months of traditional consulting; up to 90% less live meeting time per requirements topic.</p>
+        <div class="links">
+          <a href="https://varos.com" target="_blank" rel="noopener">Visit varos.com →</a>
+          <a href="https://www.youtube.com/watch?v=4mF4p-ecsBc" target="_blank" rel="noopener">Watch the product demo →</a>
+        </div>
+      </div>
+      <div class="partner-card">
+        <span class="tag">Workshops, coaching &amp; training</span>
+        <h3>Zone2 Consulting — Ahmad Fahmy</h3>
+        <p>Ahmad and the Zone2 team run workshops, coaching and advisory for organisations navigating change — complementary ground to my own organisation-design and technology-strategy work.</p>
+        <div class="links"><a href="https://zone2consulting.com" target="_blank" rel="noopener">Visit zone2consulting.com →</a></div>
+      </div>
+      <div class="partner-card">
+        <span class="tag">Coaching &amp; engineering leadership</span>
+        <h3>Curious Duck — Elisabeth Hendrickson</h3>
+        <p>Elisabeth coaches engineering leaders one-to-one, runs a leadership cohort programme, and takes on fractional engineering leadership work of her own — the closest overlap with my own practice, and a good second opinion when a client needs one.</p>
+        <div class="links"><a href="https://curiousduck.io" target="_blank" rel="noopener">Visit curiousduck.io →</a></div>
+      </div>
+      <div class="partner-card">
+        <span class="tag">Agile training &amp; open source</span>
+        <h3>Xnsio — Naresh Jain</h3>
+        <p>Naresh and Xnsio run agile and XP training, open-source projects including Specmatic, and a string of community conferences — useful depth for clients investing in engineering practice, not just technology strategy.</p>
+        <div class="links"><a href="https://xnsio.com" target="_blank" rel="noopener">Visit xnsio.com →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sectors">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Who I work with</span>
+      <h2>Founders and investors</h2>
+    </div>
+    <div class="sector-grid">
+      <div class="sector-card">
+        <span class="tag">Startups</span>
+        <h3>Early- and growth-stage companies</h3>
+        <p>A senior technology voice and sounding board before you need — or can justify — a full-time CTO. I help set technical and product direction, build the first engineering team, get product shipping, and step back cleanly once you've outgrown fractional support.</p>
+      </div>
+      <div class="sector-card">
+        <span class="tag">Investors &amp; portfolio companies</span>
+        <h3>Due diligence and portfolio leadership</h3>
+        <p>Technical diligence ahead of a deal, and hands-on leadership after it when that's the right fit: modernising platforms, right-sizing engineering cost, and building the metrics a board can trust — informed by years running technology at real budget and headcount scale inside a PE-backed platform business, including direct involvement in technical due diligence for M&amp;A activity.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="approach">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">How I work</span>
+      <h2>Evidence, direction, and a clean handover</h2>
+      <p class="lede">Whether I'm advising for a few days a month or embedded as a fractional CTO, the approach doesn't change.</p>
+    </div>
+    <div class="principle-row">
+      <div class="principle">
+        <span class="mark">“</span>
+        <h3>Evidence over opinion</h3>
+        <p>Every recommendation traces back to something measurable — delivery, operational and org-health metrics — not instinct or fashion.</p>
+      </div>
+      <div class="principle">
+        <span class="mark">“</span>
+        <h3>Direction, not just diagnosis</h3>
+        <p>Finding what's wrong is the easy part. I help set the course — the strategy and the plan — to actually get somewhere better.</p>
+      </div>
+      <div class="principle">
+        <span class="mark">“</span>
+        <h3>Built to transfer</h3>
+        <p>Every engagement leaves the team stronger and the thinking documented — not dependent on me sticking around.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <div>
+      <span class="eyebrow">About</span>
+      <h2 style="margin-top:8px; margin-bottom:16px;">Gordon Weir</h2>
+      <p class="lede" style="max-width:64ch;">
+        Twenty years leading technology and engineering across banking, capital markets and wealth management —
+        from Merrill Lynch and UBS to early-stage and PE-backed platform businesses. Currently Chief Technology
+        Officer of a private-equity-backed wealth management technology platform, owning engineering, quality
+        assurance, technology operations and product development for a global team spanning the US, UK and India.
+      </p>
+      <p class="lede" style="max-width:64ch; margin-top:14px;">
+        A builder and organisation designer — equally at home in product and technology strategy, discovery, and
+        technology operations — who works from evidence, not opinions: KPIs, metrics, and the pattern-recognition
+        that only comes from years actually running these functions, not studying them from the outside. That
+        rigour started in the Royal New Zealand Navy, long before any of this. Highwater Advisory is the practice
+        through which that experience is available fractionally, to founders and investors who need it before
+        they need a full-time hire.
+      </p>
+    </div>
+    <div class="stat-list">
+      <div class="stat"><b>20+ yrs</b><span>Leading engineering &amp; technology organisations</span></div>
+      <div class="stat"><b>300+</b><span>Engineers led across US, UK and India</span></div>
+      <div class="stat"><b>$50M</b><span>Recurring TCO saved re-platforming post-trade systems</span></div>
+      <div class="stat"><b>1,000+</b><span>Engineers trained through an internal delivery practice</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Get in touch</span>
+      <h2>Let's find your north star</h2>
+    </div>
+    <div class="contact-box">
+      <a class="email" href="mailto:gordon.j.weir@gmail.com">gordon.j.weir@gmail.com</a>
+      <p class="lede" style="max-width:36ch; margin:0;">Working with founders and investors across the UK and US.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Highwater Advisory Limited · Company No. 17460038 · United Kingdom</span>
+    <span>Technology strategy · AI adoption · Organisation design</span>
+  </div>
+</footer>
+
+</body>
+</html>
